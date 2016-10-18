@@ -37,8 +37,9 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
+    monthly_interest_rate = @apr/12/100
+    n_payments = @years*12
+    @monthly_payment = (monthly_interest_rate * @principal *(1+monthly_interest_rate)**n_payments)/((1+monthly_interest_rate)**n_payments -1)
 
     # ================================================================================
     # Your code goes above.
@@ -82,25 +83,38 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
+
+    def median(my_array)
+
+    end
 
     @median = "Replace this string with your answer."
 
-    @sum = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum / @count
 
-    @variance = "Replace this string with your answer."
+    def variance(my_array)
+      sqrdiff=[]
+        @numbers.each do |elem|
+          sqrdiff.push((elem-@mean)**2)
+        end
+        return sqrdiff.sum / sqrdiff.count
+    end
 
-    @standard_deviation = "Replace this string with your answer."
+    @variance = variance(@numbers)
+
+
+    @standard_deviation = Math.sqrt(@variance)
 
     @mode = "Replace this string with your answer."
 

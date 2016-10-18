@@ -17,7 +17,7 @@ class CalculationsController < ApplicationController
 
     @word_count = @text.lines(" ").count
 
-    @occurrences = @text.scan(@special_word).count
+    @occurrences = (@text).scan(@special_word).count
 
     # ================================================================================
     # Your code goes above.
@@ -60,13 +60,32 @@ class CalculationsController < ApplicationController
     #   So if you subtract one time from another, you will get an integer
     #   number of seconds as a result.
     # ================================================================================
+    interval = @ending - @starting
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    year_sec = 365 * 24 * 60 * 60
+    weeks_sec = 7 * 24 * 60 * 60
+    days_sec = 24 * 60 * 60
+    hours_sec = 60 * 60
+    min_sec = 60
+
+    # @years = (interval / year_sec).floor
+    # remainder = interval - @years*year_sec
+    # @weeks = (remainder / weeks_sec).floor
+    # remainder = remainder - @weeks*weeks_sec
+    # @days = (remainder / days_sec).floor
+    # remainder = remainder - @days*days_sec
+    # @hours = (remainder / hours_sec).floor
+    # remainder = remainder - @hours*hours_sec
+    # @minutes = (remainder / min_sec).floor
+    # remainder = remainder - @minutes*min_sec
+    # @seconds = remainder.to_f
+
+    @years = (interval / year_sec)
+    @weeks = (interval / weeks_sec)
+    @days = (interval / days_sec)
+    @hours = (interval / hours_sec)
+    @minutes = (interval / min_sec)
+    @seconds = interval
 
     # ================================================================================
     # Your code goes above.
@@ -94,10 +113,14 @@ class CalculationsController < ApplicationController
     @range = @maximum - @minimum
 
     def median(my_array)
-
+      while
+        my_array.length > 2
+        my_array = my_array[1..(my_array.length-2)]
+      end
+      return(my_array.sum/my_array.count)
     end
 
-    @median = "Replace this string with your answer."
+    @median = median(@sorted_numbers)
 
     @sum = @numbers.sum
 
@@ -113,10 +136,16 @@ class CalculationsController < ApplicationController
 
     @variance = variance(@numbers)
 
-
     @standard_deviation = Math.sqrt(@variance)
 
-    @mode = "Replace this string with your answer."
+    def mode(my_array)
+      unique_elements = my_array.uniq
+      unique_elements.each do |elem|
+        #my_array = my_array.delete_at(my_array.rindex{|x| x==elem})
+      end
+    end
+
+    @mode = mode(@numbers)
 
     # ================================================================================
     # Your code goes above.
